@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Grades</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+      display: flex;
+      background: #f1f5f9;
+    }
+
+    .sidebar {
+      width: 200px;
+      background: #0f172a;
+      color: white;
+      height: 100vh;
+      padding: 20px;
+    }
+
+    .sidebar a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      margin: 10px 0;
+    }
+
+    .main {
+      flex: 1;
+      padding: 20px;
+    }
+
+    input {
+      padding: 10px;
+      margin: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 10px 15px;
+      background: #38bdf8;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    table {
+      width: 100%;
+      background: white;
+      margin-top: 20px;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    th {
+      background: #38bdf8;
+      color: black;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: center;
+    }
+  </style>
+
+</head>
+
+<body>
+
+<div class="sidebar">
+  <h2>LMS</h2>
+  <a href="dashboard.html">Dashboard</a>
+  <a href="students.html">Students</a>
+  <a href="grades.html">Grades</a>
+</div>
+
+<div class="main">
+
+  <h1>Grades</h1>
+
+  <!-- ADD FORM -->
+  <h3>Add Grades</h3>
+
+  <input id="name" placeholder="Student Name">
+  <input id="math" placeholder="Math">
+  <input id="science" placeholder="Science">
+  <input id="english" placeholder="English">
+
+  <button onclick="addGrade()">Add</button>
+
+  <!-- TABLE -->
+  <table id="gradeTable"></table>
+
+</div>
+
+<script>
+
+let grades = JSON.parse(localStorage.getItem("grades")) || [];
+
+// RENDER TABLE
+function renderTable() {
+  let table = document.getElementById("gradeTable");
+
+  table.innerHTML = `
+    <tr>
+      <th>Student</th>
+      <th>Math</th>
+      <th>Science</th>
+      <th>English</th>
+      <th>Average</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  `;
+
+  let highest = 0;
+  let topIndex = -1;
+
+  grades.forEach((g, index) => {
+    let avg = (parseInt(g.math) + parseInt(g.science) + parseInt(g.english)) / 3;
+
+    if (avg > highest) {
+      highest = avg;
+      topIndex = index;
+    }
+
+    let status = avg >= 75 ? "PASS" : "FAIL";
+
+    let row = table.insertRow();
+
+    row.innerHTML = `
+      <td>${g.name}</td>
+      <td>${g.math}</td>
+      <td>${g.science}</td>
+      <td>${g.english}</td>
+      <td>${avg.toFixed(0)}</td>
+      <td style="color:${status === "PASS" ? "green" : "red"}">${status}</td>
+      <td>
+        <button onclick="deleteGrade(${index})">Delete</button>
+      </td>
+    `;
+
+    if (index === topIndex) {
+      row.style.background = "#d1fae5";
+    }
+  });
+
+  localStorage.setItem("grades", JSON.stringify(grades));
+}
+
+// ADD
+function addGrade() {
+  let name = document.getElementById("name").value;
+  let math = document.getElementById("math").value;
+  let science = document.getElementById("science").value;
+  let english = document.getElementById("english").value;
+
+  if (!name || !math || !science || !english) {
+    alert("Please fill all fields");
+    return;
+  }
+
+  grades.push({ name, math, science, english });
+
+  clearInputs();
+  renderTable();
+}
+
+// DELETE
+function deleteGrade(index) {
+  grades.splice(index, 1);
+  renderTable();
+}
+
+// CLEAR
+function clearInputs() {
+  document.getElementById("name").value = "";
+  document.getElementById("math").value = "";
+  document.getElementById("science").value = "";
+  document.getElementById("english").value = "";
+}
+
+// INIT
+renderTable();
+
+</script>
+
+</body>
+</html>

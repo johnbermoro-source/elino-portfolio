@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Repair Login</title>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #000000, #3b82f6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+    }
+
+    .login-box {
+      background: rgba(26, 3, 3, 0.1);
+      padding: 40px;
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      width: 300px;
+      text-align: center;
+      color: white;
+    }
+
+    .login-box h2 {
+      margin-bottom: 20px;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 8px;
+      background: transparent;
+      color: white;
+    }
+
+    .login-box button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 8px;
+      background: white;
+      color: #08153a;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .forgot {
+      margin-top: 10px;
+      font-size: 12px;
+      opacity: 0.8;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <div class="login-box">
+    <h2>Repair sys</h2>
+
+    <input type="text" placeholder="Username">
+    <input type="password" placeholder="Password">
+
+    <button onclick="login()">LOGIN</button>
+
+    <p class="forgot">Forgot password?</p>
+  </div>
+
+  
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Students</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+      display: flex;
+      background: #f1f5f9;
+    }
+
+    .sidebar {
+      width: 200px;
+      background: #0f172a;
+      color: white;
+      height: 100vh;
+      padding: 20px;
+    }
+
+    .sidebar a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      margin: 10px 0;
+    }
+
+    .main {
+      flex: 1;
+      padding: 20px;
+    }
+
+    input, select {
+      padding: 10px;
+      margin: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 10px 15px;
+      background: #38bdf8;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    table {
+      width: 100%;
+      background: white;
+      margin-top: 20px;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    th {
+      background: #38bdf8;
+      color: black;
+    }
+
+    th, td {
+      padding: 10px;
+      color: black;
+    }
+
+    .actions button {
+      margin-right: 5px;
+    }
+  </style>
+
+</head>
+
+<body>
+
+<div class="sidebar">
+  <h2>LMS</h2>
+  <a href="dashboard.html">Dashboard</a>
+  <a href="students.html">Students</a>
+  <a href="grades.html">Grades</a>
+</div>
+
+<div class="main">
+
+  <h1>Students</h1>
+
+  <!-- SEARCH + FILTER -->
+  <input type="text" id="search" placeholder="Search student..." onkeyup="searchStudent()">
+
+  <select id="filterCourse" onchange="filterCourse()">
+    <option value="All">All Courses</option>
+    <option value="Grade 10 - ICT">Grade 10 - ICT</option>
+    <option value="Grade 11 - STEM">Grade 11 - STEM</option>
+  </select>
+
+  <!-- ADD FORM -->
+  <h3>Add Student</h3>
+
+  <input type="text" id="name" placeholder="Name">
+  <input type="number" id="grade" placeholder="Grade">
+  
+  <select id="course">
+    <option value="">Select Course</option>
+    <option>Grade 10 - ICT</option>
+    <option>Grade 11 - STEM</option>
+  </select>
+
+  <button onclick="addStudent()">Add Student</button>
+
+  <!-- TABLE -->
+  <table id="studentTable"></table>
+
+</div>
+
+<script>
+let students = JSON.parse(localStorage.getItem("students")) || [];
+
+// RENDER TABLE
+function renderTable(data = students) {
+  let table = document.getElementById("studentTable");
+
+  table.innerHTML = `
+    <tr>
+      <th>Name</th>
+      <th>Grade</th>
+      <th>Course</th>
+      <th>Action</th>
+    </tr>
+  `;
+
+  data.forEach((s, index) => {
+    let row = table.insertRow();
+
+    row.innerHTML = `
+      <td>${s.name}</td>
+      <td>${s.grade}</td>
+      <td>${s.course}</td>
+      <td class="actions">
+        <button onclick="editStudent(${index})">Edit</button>
+        <button onclick="deleteStudent(${index})">Delete</button>
+      </td>
+    `;
+  });
+}
+
+// ADD
+function addStudent() {
+  let name = document.getElementById("name").value;
+  let grade = document.getElementById("grade").value;
+  let course = document.getElementById("course").value;
+
+  if (!name || !grade || !course) {
+    alert("Please fill all fields");
+    return;
+  }
+
+  students.push({ name, grade, course });
+  saveAndRender();
+
+  clearInputs();
+}
+
+// DELETE
+function deleteStudent(index) {
+  students.splice(index, 1);
+  saveAndRender();
+}
+
+// EDIT
+function editStudent(index) {
+  let s = students[index];
+
+  document.getElementById("name").value = s.name;
+  document.getElementById("grade").value = s.grade;
+  document.getElementById("course").value = s.course;
+
+  students.splice(index, 1);
+  saveAndRender();
+}
+
+// SEARCH
+function searchStudent() {
+  let input = document.getElementById("search").value.toLowerCase();
+
+  let filtered = students.filter(s =>
+    s.name.toLowerCase().includes(input)
+  );
+
+  renderTable(filtered);
+}
+
+// FILTER
+function filterCourse() {
+  let selected = document.getElementById("filterCourse").value;
+
+  if (selected === "All") {
+    renderTable();
+    return;
+  }
+
+  let filtered = students.filter(s => s.course === selected);
+  renderTable(filtered);
+}
+
+// SAVE
+function saveAndRender() {
+  localStorage.setItem("students", JSON.stringify(students));
+  renderTable();
+}
+
+// CLEAR INPUTS
+function clearInputs() {
+  document.getElementById("name").value = "";
+  document.getElementById("grade").value = "";
+  document.getElementById("course").value = "";
+}
+
+// INITIAL LOAD
+renderTable();
+</script>
+
+</body>
+</html>

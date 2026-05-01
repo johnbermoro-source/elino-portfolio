@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Repair Jobs</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      background: #f1f5f9;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #0f172a;
+    }
+
+    input {
+      padding: 10px;
+      margin: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 10px 15px;
+      background: #38bdf8;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    table {
+      width: 100%;
+      background: white;
+      margin-top: 20px;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    th {
+      background: #38bdf8;
+      color: black;
+    }
+
+    th, td {
+      padding: 12px;
+    }
+  </style>
+
+</head>
+
+<body>
+
+<h1>Repair Jobs</h1>
+<h3>Search by IMEI</h3>
+<input type="text" id="searchImei" placeholder="Enter IMEI" onkeyup="searchIMEI()">
+<h3>Add Repair Job</h3>
+
+<input type="text" id="customer" placeholder="Customer Name">
+<input type="text" id="device" placeholder="Device">
+<input type="text" id="issue" placeholder="Issue">
+<input type="text" id="imei" placeholder="IMEI">
+
+
+<button onclick="addJob()">Add Job</button>
+
+<table>
+  <tr>
+    <th>Customer</th>
+    <th>Device</th>
+    <th>Issue</th>
+    <th>IMEI</th>
+    <th>Status</th>
+  </tr>
+</table>
+
+<script>
+  function searchIMEI() {
+  // check duplicate IMEI
+let row = document.querySelectorAll("table tr");
+
+for (let i = 1; i < rows.length; i++) {
+  let existingIMEI = rows[i].cells[3].innerText;
+
+  if (existingIMEI === imei) {
+    alert("⚠️ IMEI already exists!");
+    return;
+  }
+}  
+  let input = document.getElementById("searchImei").value.toLowerCase();
+  let rows = document.querySelectorAll("table tr");
+  
+
+  rows.forEach((row, index) => {
+    if (index === 0) return; // skip header
+
+    let imeiCell = row.cells[3]; // IMEI column
+    if (!imeiCell) return;
+
+    let imei = imeiCell.innerText.toLowerCase();
+
+    if (imei.includes(input)) {
+      row.style.display = "";
+    } else {
+      row.style.display = "none";
+    }
+  });
+}
+  function addJob() {
+    let customer = document.getElementById("customer").value;
+    let device = document.getElementById("device").value;
+    let issue = document.getElementById("issue").value;
+    let imei = document.getElementById("imei").value;
+
+    if (!customer || !device || !issue || !imei) {
+      alert("Please fill all fields");
+      return;
+    }
+
+    let table = document.querySelector("table");
+    let newRow = table.insertRow();
+
+    newRow.innerHTML = `
+      <td>${customer}</td>
+      <td>${device}</td>
+      <td>${issue}</td>
+      <td>${imei}</td>
+      <td class="status">Pending</td>
+    `;
+
+    document.getElementById("customer").value = "";
+    document.getElementById("device").value = "";
+    document.getElementById("issue").value = "";
+    document.getElementById("imei").value = "";
+  }
+
+  document.addEventListener("click", function(e) {
+    if (e.target.classList.contains("status")) {
+      if (e.target.innerText === "Pending") {
+        e.target.innerText = "In Progress";
+        e.target.style.color = "orange";
+
+      } else if (e.target.innerText === "In Progress") {
+        e.target.innerText = "Done";
+        e.target.style.color = "green";
+
+      } else {
+        e.target.innerText = "Pending";
+        e.target.style.color = "red";
+      }
+    }
+    
+  });
+</script>
+
+</body>
+</html>

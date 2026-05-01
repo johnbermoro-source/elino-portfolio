@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Business Automation Dashboard</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      background: #f8fafc;
+    }
+
+    .sidebar {
+      width: 220px;
+      background: #020617;
+      color: white;
+      height: 100vh;
+      padding: 20px;
+    }
+
+    .sidebar h2 {
+      color: #38bdf8;
+    }
+
+    .sidebar a {
+      display: block;
+      color: #94a3b8;
+      margin: 10px 0;
+      text-decoration: none;
+    }
+
+    .main {
+      flex: 1;
+      padding: 25px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    input, select {
+      padding: 10px;
+      margin: 5px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
+
+    button {
+      padding: 10px 15px;
+      background: #38bdf8;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    table {
+      width: 100%;
+      margin-top: 20px;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    th {
+      background: #38bdf8;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: center;
+    }
+  </style>
+
+</head>
+
+<body>
+
+<div class="sidebar">
+  <h2>BizSys</h2>
+  <a href="#">Dashboard</a>
+</div>
+
+<div class="main">
+
+  <h1>Business Automation Dashboard</h1>
+
+  <!-- CARDS -->
+  <div class="cards">
+    <div class="card">
+      <h2 id="sales">0</h2>
+      <p>Total Sales</p>
+    </div>
+
+    <div class="card">
+      <h2 id="jobs">0</h2>
+      <p>Total Jobs</p>
+    </div>
+
+    <div class="card">
+      <h2 id="done">0</h2>
+      <p>Completed</p>
+    </div>
+  </div>
+
+  <!-- CHART -->
+  <canvas id="chart" height="100"></canvas>
+
+  <!-- FORM -->
+  <h3>Add Transaction</h3>
+  <input id="customer" placeholder="Customer">
+  <input id="amount" placeholder="Amount">
+  <button onclick="addTransaction()">Add</button>
+
+  <!-- TABLE -->
+  <table id="table"></table>
+
+</div>
+
+<script>
+let data = JSON.parse(localStorage.getItem("biz")) || [];
+let chart;
+
+function render() {
+  let table = document.getElementById("table");
+
+  table.innerHTML = `
+    <tr>
+      <th>Customer</th>
+      <th>Amount</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  `;
+
+  let totalSales = 0;
+  let completed = 0;
+
+  data.forEach((d, index) => {
+    totalSales += parseInt(d.amount);
+
+    if (d.status === "Done") completed++;
+
+    let row = table.insertRow();
+
+    row.innerHTML = `
+      <td>${d.customer}</td>
+      <td>${d.amount}</td>
+      <td>
+        <select onchange="changeStatus(${index}, this.value)">
+          <option ${d.status === "Pending" ? "selected" : ""}>Pending</option>
+          <option ${d.status === "Done" ? "selected" : ""}>Done</option>
+        </select>
+      </td>
+      <td><button onclick="deleteItem(${index})">Delete</button></td>
+    `;
+
+    if (d.status === "Done") {
+      row.style.background = "#ecfdf5";
+    }
+  });
+
+  document.getElementById("sales").innerText = totalSales;
+  document.getElementById("jobs").innerText = data.length;
+  document.getElementById("done").innerText = completed;
+
+  localStorage.setItem("biz", JSON.stringify(data));
+
+  renderChart();
+}
+
+function addTransaction() {
+  let customer = document.getElementById("customer").value;
+  let amount = document.getElementById("amount").value;
+
+  if (!customer || !amount) {
+    alert("Fill all fields");
+    return;
+  }
+
+  data.push({
+    customer,
+    amount,
+    status: "Pending"
+  });
+
+  document.getElementById("customer").value = "";
+  document.getElementById("amount").value = "";
+
+  render();
+}
+
+function changeStatus(index, value) {
+  data[index].status = value;
+  render();
+}
+
+function deleteItem(index) {
+  data.splice(index, 1);
+  render();
+}
+
+function renderChart() {
+  let done = data.filter(d => d.status === "Done").length;
+  let pending = data.filter(d => d.status === "Pending").length;
+
+  let ctx = document.getElementById("chart");
+
+  if (chart) chart.destroy();
+
+  chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Done', 'Pending'],
+      datasets: [{
+        label: 'Jobs',
+        data: [done, pending]
+      }]
+    }
+  });
+}
+
+render();
+</script>
+
+</body>
+</html>

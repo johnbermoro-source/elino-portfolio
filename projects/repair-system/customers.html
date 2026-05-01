@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Customers</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      margin: 0;
+      background: #f1f5f9;
+      display: flex;
+    }
+
+    .sidebar {
+      width: 200px;
+      background: #0f172a;
+      color: white;
+      height: 100vh;
+      padding: 20px;
+    }
+
+    .sidebar a {
+      display: block;
+      color: white;
+      margin: 10px 0;
+      text-decoration: none;
+    }
+
+    .main {
+      flex: 1;
+      padding: 20px;
+    }
+
+    input {
+      padding: 10px;
+      margin: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 10px 15px;
+      background: #38bdf8;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    table {
+      width: 100%;
+      margin-top: 20px;
+      background: white;
+      border-radius: 10px;
+    }
+
+    th {
+      background: #38bdf8;
+    }
+
+    th, td {
+      padding: 10px;
+    }
+  </style>
+
+</head>
+
+<body>
+
+<div class="sidebar">
+  <h2>RepairSys</h2>
+  <a href="dashboard.html">Dashboard</a>
+  <a href="jobs.html">Jobs</a>
+  <a href="customers.html">Customers</a>
+</div>
+
+<div class="main">
+
+  <h1>Customers</h1>
+
+  <h3>Add Customer</h3>
+
+  <input type="text" id="name" placeholder="Customer Name">
+  <input type="text" id="contact" placeholder="Contact Number">
+  <input type="text" id="device" placeholder="Device">
+  <input type="text" id="imei" placeholder="IMEI">
+
+  <button onclick="addCustomer()">Add Customer</button>
+
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Contact</th>
+      <th>Device</th>
+      <th>IMEI</th>
+    </tr>
+  </table>
+
+</div>
+
+<script>
+function addCustomer() {
+  let name = document.getElementById("name").value;
+  let contact = document.getElementById("contact").value;
+  let device = document.getElementById("device").value;
+  let imei = document.getElementById("imei").value;
+
+  if (!name || !contact || !device || !imei) {
+    alert("Please fill all fields");
+    return;
+  }
+
+  let table = document.querySelector("table");
+  let row = table.insertRow();
+
+  row.innerHTML = `
+    <td>${name}</td>
+    <td>${contact}</td>
+    <td>${device}</td>
+    <td>${imei}</td>
+  `;
+
+  document.getElementById("name").value = "";
+  document.getElementById("contact").value = "";
+  document.getElementById("device").value = "";
+  document.getElementById("imei").value = "";
+}
+</script>
+
+</body>
+</html>
