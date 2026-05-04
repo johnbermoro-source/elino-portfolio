@@ -16,7 +16,6 @@ body {
   scroll-behavior: smooth;
 }
 
-/* HERO */
 .hero {
   text-align: center;
   padding: 100px 20px;
@@ -27,57 +26,23 @@ body {
   color: #38bdf8;
 }
 
-/* BUTTON */
 .btn-custom {
   background: #38bdf8;
   color: #000;
   font-weight: bold;
-  transition: 0.3s;
 }
 
-.btn-custom:hover {
-  background: #0ea5e9;
-  transform: scale(1.05);
-}
-
-/* CARD */
 .card-custom {
   background: rgba(2, 6, 23, 0.7);
-  backdrop-filter: blur(10px);
   border-radius: 16px;
   padding: 20px;
   margin-bottom: 20px;
-  transition: 0.3s;
   border: 1px solid rgba(56, 189, 248, 0.1);
 }
 
-.card-custom:hover {
-  transform: translateY(-8px) scale(1.02);
-}
-
-/* TITLE */
 h2 {
   color: #38bdf8;
   margin-bottom: 20px;
-}
-
-/* ANIMATION */
-.fade-in {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.8s ease;
-}
-
-.fade-in.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* IMAGE */
-.project-img {
-  width: 100%;
-  border-radius: 10px;
-  margin-bottom: 10px;
 }
 </style>
 
@@ -86,68 +51,105 @@ h2 {
 <body>
 
 <!-- HERO -->
-<div class="hero fade-in">
+<div class="hero">
   <div class="container">
     <h1>I Build Systems That Automate Your Business Operations</h1>
     <p>
-      supported and managed a multi-time zone customer experience for 5,000+ teachers.
-      I build systems that simplify operations and help businesses scale.
+      I help businesses simplify workflows, manage data, and improve efficiency.
     </p>
     <a href="#contact" class="btn btn-custom mt-4">Work With Me</a>
   </div>
 </div>
 
-<!-- ABOUT -->
-<section class="container mt-5 fade-in">
-  <h2>About Me</h2>
-  <div class="card-custom">
-    <p>
-      I'm Elino Escultura,  I build systems and websites that automate business operations.
-    </p>
-  </div>
-</section>
-
-<!-- SERVICES -->
-<section class="container mt-5 fade-in">
-  <h2>What I Can Do For You</h2>
-
-  <div class="row">
-    <div class="col-md-6"><div class="card-custom">✔ Learning Management System (LMS)</div></div>
-    <div class="col-md-6"><div class="card-custom">✔ Business Automation Systems</div></div>
-    <div class="col-md-6"><div class="card-custom">✔ Workflow Automation</div></div>
-    <div class="col-md-6"><div class="card-custom">✔ Data Dashboards & Reports</div></div>
-  </div>
-</section>
-
-<!-- PROJECTS -->
-<section class="container mt-5 fade-in">
-  <h2>Sample Work</h2>
+<!-- WHAT I DO -->
+<section class="container mt-5" style="padding:60px 20px;">
+  <h2>What I Do</h2>
 
   <div class="row">
 
     <div class="col-md-4">
       <div class="card-custom">
-        
+        <h5>Virtual Assistant</h5>
+        <p>
+          Data entry, admin tasks, email handling, and workflow support.
+        </p>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card-custom">
+        <h5>Web Development</h5>
+        <p>
+          Website updates, landing pages, and responsive design using HTML/CSS.
+        </p>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card-custom">
+        <h5>Automation (Soon)</h5>
+        <p>
+          Learning CRM and automation tools to help businesses scale faster.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROJECT PREVIEW (IMAGES ONLY) -->
+<section class="container mt-5" style="padding:60px 20px; border-top:1px solid rgba(56,189,248,0.1);">
+  <h2>Project Preview</h2>
+
+  <div class="row">
+
+    <div class="col-md-4">
+      <img src="https://cdn.dribbble.com/userupload/47604905/file/b4d1641005a2a692dd54b2b5a76563d1.jpg?resize=1024x769&vertical=center"
+           style="width:100%; border-radius:10px;">
+    </div>
+
+    <div class="col-md-4">
+      <img src="https://cdn.dribbble.com/userupload/47604933/file/a4395397f6bdda96073f88f60e30f439.jpg?resize=1024x769&vertical=center"
+           style="width:100%; border-radius:10px;">
+    </div>
+
+    <div class="col-md-4">
+      <img src="https://cdn.dribbble.com/userupload/47604952/file/9d7f468e84233e430332d1eeaa52316a.jpg?resize=1024x769&vertical=center"
+           style="width:100%; border-radius:10px;">
+    </div>
+
+  </div>
+</section>
+
+<!-- PORTFOLIO WITH EXPLANATION -->
+<section class="container mt-5" style="padding:60px 20px;">
+  <h2>Portfolio</h2>
+
+  <div class="row">
+
+    <div class="col-md-4">
+      <div class="card-custom">
         <h5>School LMS System</h5>
-        <p>Student management, grading, attendance system.</p>
+        <p><strong>What I Did:</strong> Built student tracking system</p>
+        <p><strong>Result:</strong> Organized data and improved monitoring</p>
         <a href="projects/lms-demo/login.html" target="_blank">Live Demo</a>
       </div>
     </div>
 
     <div class="col-md-4">
       <div class="card-custom">
-        
         <h5>Business Automation System</h5>
-        <p>Customer tracking, reports, workflows.</p>
+        <p><strong>What I Did:</strong> Built workflow and tracking system</p>
+        <p><strong>Result:</strong> Reduced manual processes</p>
         <a href="projects/repair-system/login.html" target="_blank">Live Demo</a>
       </div>
     </div>
 
     <div class="col-md-4">
       <div class="card-custom">
-        
         <h5>Business Dashboard</h5>
-        <p>Automated reports and monitoring system.</p>
+        <p><strong>What I Did:</strong> Created reporting dashboard</p>
+        <p><strong>Result:</strong> Real-time monitoring</p>
         <a href="projects/business-dashboard/dashboard.html" target="_blank">Live Demo</a>
       </div>
     </div>
@@ -155,24 +157,33 @@ h2 {
   </div>
 </section>
 
-<!-- CONTACT FORM -->
-<section id="contact" class="container mt-5 fade-in">
+<!-- PROOF SECTION -->
+<section class="container mt-5" style="padding:60px 20px; border-top:1px solid rgba(56,189,248,0.1);">
+  <h2>Proof of Work</h2>
+
+  <div class="card-custom">
+    <p>Watch how I build and explain my systems:</p>
+
+    <div style="background:#020617; padding:20px; border-radius:10px; text-align:center;">
+      🎥 Loom Video Demo (Coming Soon)
+    </div>
+
+    <p style="margin-top:15px;">
+      ✔ Experience managing 5,000+ users  
+      ✔ Built systems that simplify workflows  
+    </p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="container mt-5">
   <h2>Contact Me</h2>
 
   <div class="card-custom">
     <form action="https://formspree.io/f/xlgzjndr" method="POST">
-      <div class="form-group">
-        <input type="text" name="name" class="form-control" placeholder="Your Name" required>
-      </div>
-
-      <div class="form-group">
-        <input type="email" name="email" class="form-control" placeholder="Your Email" required>
-      </div>
-
-      <div class="form-group">
-        <textarea name="message" class="form-control" placeholder="Your Message" required></textarea>
-      </div>
-
+      <input type="text" name="name" class="form-control mb-2" placeholder="Your Name" required>
+      <input type="email" name="email" class="form-control mb-2" placeholder="Your Email" required>
+      <textarea name="message" class="form-control mb-2" placeholder="Your Message" required></textarea>
       <button type="submit" class="btn btn-custom">Send Message</button>
     </form>
 
@@ -185,24 +196,6 @@ h2 {
 <footer class="text-center mt-5 p-3" style="background:#020617;">
   © 2026 Elino Escultura
 </footer>
-
-<script>
-const elements = document.querySelectorAll('.fade-in');
-
-function reveal() {
-  elements.forEach(el => {
-    const top = el.getBoundingClientRect().top;
-    const windowHeight = window.innerHeight;
-
-    if (top < windowHeight - 50) {
-      el.classList.add('show');
-    }
-  });
-}
-
-window.addEventListener('scroll', reveal);
-reveal();
-</script>
 
 </body>
 </html>
