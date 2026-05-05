@@ -233,17 +233,25 @@ h2 {
     
 
   </div>
-<div class="row mt-4">
+
+
+ <div class="row mt-4">
 
   <div class="col-md-6">
     <p><strong>Before</strong></p>
-    <img src="https://cdn.dribbble.com/userupload/47609420/file/86c819933d3d7548b89cecaf1dfe891c.png?resize=1024x799&vertical=center" style="width:100%; border-radius:10px;">
+    <img src="https://cdn.dribbble.com/userupload/47609420/file/86c819933d3d7548b89cecaf1dfe891c.png?resize=1024x799&vertical=center"
+         style="width:100%; border-radius:10px; cursor:pointer;"
+         onclick="openModal(this)">
   </div>
 
   <div class="col-md-6">
     <p><strong>After</strong></p>
-    <img src="https://cdn.dribbble.com/userupload/47609461/file/a9c288ba531a538f2ce76424a3a3be9a.png?resize=1024x801&vertical=center" style="width:100%; border-radius:10px;">
+    <img src="https://cdn.dribbble.com/userupload/47609461/file/a9c288ba531a538f2ce76424a3a3be9a.png?resize=1024x801&vertical=center"
+         style="width:100%; border-radius:10px; cursor:pointer;"
+         onclick="openModal(this)">
   </div>
+
+</div>
 
 </div>
 </div>
@@ -276,10 +284,30 @@ h2 {
 <hr>
     
 <!-- MODAL -->
-<div id="imgModal" onclick="this.style.display='none'">
-  <img id="modalImg">
+ <div id="imgModal" onclick="this.style.display='none'" style="
+  display:none;
+  position:fixed;
+  z-index:9999;
+  top:0; left:0;
+  width:100%; height:100%;
+  background:rgba(0,0,0,0.9);
+  padding-top:100px;
+">
+  <img id="modalImg" style="
+    display:block;
+    margin:auto;
+    max-width:80%;
+    border-radius:10px;
+  ">
 </div>
 
+
+<script>
+function openModal(img) {
+  document.getElementById("imgModal").style.display = "block";
+  document.getElementById("modalImg").src = img.src;
+}
+</script>
 <script>
 function openModal(img) {
   document.getElementById("imgModal").style.display = "block";
